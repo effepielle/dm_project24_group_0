@@ -2,8 +2,7 @@
 
 Project for the Data Mining course @ [University of Pisa](https://www.unipi.it/index.php/english)
 
-Authors: [Francesco Paolo Liuzzi]([https://github.com/alessandrocubic](https://github.com/effepielle)), [Francesco Aliprandi]([https://github.com/AlbertoMarinelli](https://github.com/francealip)), [Francesco Simonetti]([https://github.com/giacomo-cgn](https://github.com/francescoS01))
-
+Authors: [Francesco Paolo Liuzzi](https://github.com/effepielle), [Francesco Aliprandi](https://github.com/francealip), [Francesco Simonetti](https://github.com/francescoS01)
 
 ### Abstract
 Data Mining project carried out on two datasets comprises of a set of professional cycling races, spanning several years in time. The project consists of data analysis based on data mining tools divided into four tasks:
