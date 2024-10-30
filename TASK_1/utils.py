@@ -79,3 +79,8 @@ def compute_bmi(weight, height):
         return round(weight / ((height / 100) ** 2), 2)
     else:
         return np.nan
+    
+# Difficulty index function
+def compute_difficulty_index(length, climb_total, profile):
+    difficulty_index = length*0.3 + climb_total*0.5 + profile*0.2
+    return round(difficulty_index, 2)
