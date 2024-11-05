@@ -82,5 +82,7 @@ def compute_bmi(weight, height):
     
 # Difficulty index function
 def compute_difficulty_index(length, climb_total, profile):
-    difficulty_index = length*0.3 + climb_total*0.5 + profile*0.2
+    # total meters climbed is more impacting, then length of the race and
+    # finally profile value as competitions at altitude are more complex 
+    difficulty_index = length*0.3 + climb_total*0.6 + profile*0.1
     return round(difficulty_index, 2)
