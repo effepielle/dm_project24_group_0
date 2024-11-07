@@ -15,7 +15,7 @@ import numpy as np
 def correlations(dataset: pd.DataFrame) -> pd.DataFrame:
     correlations_dictionary = {
         correlation_type: dataset.corr(numeric_only=True, method=correlation_type)
-        for correlation_type in ("kendall", "pearson", "spearman")
+        for correlation_type in ("kendall", "spearman") #("kendall", "pearson", "spearman")
     }
     for i, k in enumerate(correlations_dictionary.keys()):
         correlations_dictionary[k].loc[:, "correlation_type"] = k
