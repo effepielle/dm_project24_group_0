@@ -12,10 +12,10 @@ import numpy as np
 # DATA PREPROCESSING FUNCTIONS 
 
 #correlation function 
-def correlations(dataset: pd.DataFrame) -> pd.DataFrame:
+def correlations(dataset: pd.DataFrame, corr_idx) -> pd.DataFrame:
     correlations_dictionary = {
         correlation_type: dataset.corr(numeric_only=True, method=correlation_type)
-        for correlation_type in ("kendall", "spearman") #("kendall", "pearson", "spearman")
+        for correlation_type in corr_idx
     }
     for i, k in enumerate(correlations_dictionary.keys()):
         correlations_dictionary[k].loc[:, "correlation_type"] = k
