@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import bisect
 
 
 # DATA PREPROCESSING FUNCTIONS 
@@ -70,8 +71,10 @@ def count_outliers(column: pd.DataFrame) -> pd.Series:
     IQR = Q3 - Q1
     outliers = column[(column < (Q1 - 1.5 * IQR)) | (column > (Q3 + 1.5 * IQR))]
 
-    print(f"Number of outliers: {len(outliers)} over {len(column) - column.isnull().sum()} values")
+    print(f"Number of outliers: {len(outliers)} over {len(column) - column.isnull().sum()} values using the IQR method")
     return None
+
+# FEATURE ENGINEERING FUNCTIONS: 
 
 # BMI index function
 
@@ -87,3 +90,65 @@ def compute_difficulty_index(length, climb_total, profile):
     # finally profile value as competitions at altitude are more complex 
     difficulty_index = length*0.3 + climb_total*0.6 + profile*0.1
     return round(difficulty_index, 2)
+
+def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
+    # Initialize the dictionary
+    cyclist_performance = {}
+
+    # iteration in all races to compute the cyclist level
+    for _, row in races_df.iterrows():
+        
+        cyclist = row['cyclist']
+        position = row['position']
+        points = row['points']
+
+        # Initialize the nested dictionary if the cyclist is not already in the dictionary
+        if cyclist not in cyclist_performance:
+            cyclist_performance[cyclist] = {
+                'win_points': [],
+                'second_place_points': [],
+                'third_place_points': [],
+                'fourth_place_points': [],
+                'total_races': 0
+            }
+
+        cyclist_performance[cyclist]['total_races'] += 1
+        
+        # Add the date and points as a tuple to the appropriate list based on the position
+        if position == 0:
+            cyclist_performance[cyclist]['win_points'].append(points)
+        elif position == 1:
+            cyclist_performance[cyclist]['second_place_points'].append(points)
+        elif position == 2:
+            cyclist_performance[cyclist]['third_place_points'].append(points)
+        elif position == 3:
+            cyclist_performance[cyclist]['fourth_place_points'].append(points)
+        
+
+        normalized_level = 0.0
+
+        # Sum of placements weighted by their position and race score before the date
+        placement_sum = 0
+        for position, weight in WEIGHTS.items():
+            for points in cyclist_performance[cyclist].get(position, []):
+                placement_sum += weight * points
+            
+            normalized_level = placement_sum / cyclist_performance[cyclist]['total_races']
+        
+        # Update the 'cyclist_level' column for the current row
+        races_df.at[row.name, 'cyclist_level'] = normalized_level
+    
+    return cyclist_performance
+
+def get_season(date):
+    month = date.month
+    day = date.day
+
+    if (month == 12 and day >= 21) or (month <= 2) or (month == 3 and day < 20):
+        return 'Winter'
+    elif (month == 3 and day >= 20) or (month <= 5) or (month == 6 and day < 21):
+        return 'Spring'
+    elif (month == 6 and day >= 21) or (month <= 8) or (month == 9 and day < 22):
+        return 'Summer'
+    else:
+        return 'Autumn'
