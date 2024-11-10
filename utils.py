@@ -104,25 +104,18 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
 
         # Initialize the nested dictionary if the cyclist is not already in the dictionary
         if cyclist not in cyclist_performance:
-            cyclist_performance[cyclist] = {
-                'win_points': [],
-                'second_place_points': [],
-                'third_place_points': [],
-                'fourth_place_points': [],
-                'total_races': 0
-            }
+            cyclist_performance[cyclist] = {'total_races': 0}
+                # viene creato un dizionario per ogni ciclista con le chiavi '1_points', '2_points', '3_points', ... e 'total
 
         cyclist_performance[cyclist]['total_races'] += 1
+
         
         # Add the date and points as a tuple to the appropriate list based on the position
-        if position == 0:
-            cyclist_performance[cyclist]['win_points'].append(points)
-        elif position == 1:
-            cyclist_performance[cyclist]['second_place_points'].append(points)
-        elif position == 2:
-            cyclist_performance[cyclist]['third_place_points'].append(points)
-        elif position == 3:
-            cyclist_performance[cyclist]['fourth_place_points'].append(points)
+        position_key = f'{position + 1}_points'
+        if position_key in cyclist_performance[cyclist]:
+            cyclist_performance[cyclist][position_key].append(points)
+        else:
+            cyclist_performance[cyclist][position_key] = [points]
         
 
         normalized_level = 0.0
@@ -130,8 +123,9 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
         # Sum of placements weighted by their position and race score before the date
         placement_sum = 0
         for position, weight in WEIGHTS.items():
-            for points in cyclist_performance[cyclist].get(position, []):
-                placement_sum += weight * points
+            if position in cyclist_performance[cyclist]:
+                for points in cyclist_performance[cyclist].get(position, []):
+                    placement_sum += weight * points
             
             normalized_level = placement_sum / cyclist_performance[cyclist]['total_races']
         
