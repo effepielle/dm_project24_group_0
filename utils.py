@@ -105,7 +105,7 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
         # Initialize the nested dictionary if the cyclist is not already in the dictionary
         if cyclist not in cyclist_performance:
             cyclist_performance[cyclist] = {'total_races': 0}
-                # viene creato un dizionario per ogni ciclista con le chiavi '1_points', '2_points', '3_points', ... e 'total
+            # a dictionary is created for each cyclist with the keys '1_points', '2_points', '3_points', ... and 'total'
 
         cyclist_performance[cyclist]['total_races'] += 1
 
