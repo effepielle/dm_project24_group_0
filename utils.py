@@ -10,7 +10,7 @@ import numpy as np
 import bisect
 
 
-# DATA PREPROCESSING FUNCTIONS 
+# ----- DATA PREPROCESSING FUNCTIONS -----
 
 #correlation function 
 def correlations(dataset: pd.DataFrame, corr_idx) -> pd.DataFrame:
@@ -23,6 +23,7 @@ def correlations(dataset: pd.DataFrame, corr_idx) -> pd.DataFrame:
     correlations_matrix = pd.concat(correlations_dictionary.values())
 
     return correlations_matrix
+
 
 def plot_correlations(correlations: pd.DataFrame, fig_size: tuple = (18,6)) -> None:
     # Plot heatmaps for each correlation type
@@ -38,6 +39,7 @@ def plot_correlations(correlations: pd.DataFrame, fig_size: tuple = (18,6)) -> N
 
     plt.tight_layout()
     plt.show()
+
 
 # single feature transformation function
 def __transform_single_features(dataset: pd.DataFrame, transformation: str) -> Tuple[
@@ -57,10 +59,12 @@ def __transform_single_features(dataset: pd.DataFrame, transformation: str) -> T
 
     return transformed_dataset, transformations
 
+
 # center and scale function
 def center_and_scale(dataset: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """Shifts data to the origin: removes mean and scales by standard deviation all numeric features. Returns a copy of the dataset."""
     return __transform_single_features(dataset, "standard")
+
 
 # outlier counts function
 def count_outliers(column: pd.DataFrame) -> pd.Series:
@@ -74,15 +78,16 @@ def count_outliers(column: pd.DataFrame) -> pd.Series:
     print(f"Number of outliers: {len(outliers)} over {len(column) - column.isnull().sum()} values using the IQR method")
     return None
 
-# FEATURE ENGINEERING FUNCTIONS: 
+
+# ----- FEATURE ENGINEERING FUNCTIONS ----- 
 
 # BMI index function
-
 def compute_bmi(weight, height):
     if pd.notnull(weight) and pd.notnull(height):
         return round(weight / ((height / 100) ** 2), 2)
     else:
         return np.nan
+    
     
 # Difficulty index function
 def compute_difficulty_index(length, climb_total, profile):
@@ -90,6 +95,7 @@ def compute_difficulty_index(length, climb_total, profile):
     # finally profile value as competitions at altitude are more complex 
     difficulty_index = length*0.3 + climb_total*0.6 + profile*0.1
     return round(difficulty_index, 2)
+
 
 def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
     # Initialize the dictionary
@@ -108,7 +114,6 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
             # a dictionary is created for each cyclist with the keys '1_points', '2_points', '3_points', ... and 'total'
 
         cyclist_performance[cyclist]['total_races'] += 1
-
         
         # Add the date and points as a tuple to the appropriate list based on the position
         position_key = f'{position + 1}_points'
@@ -116,8 +121,35 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
             cyclist_performance[cyclist][position_key].append(points)
         else:
             cyclist_performance[cyclist][position_key] = [points]
-        
+    
+    return cyclist_performance
 
+
+def compute_cyclist_cumulative_performance(races_df: pd.DataFrame, WEIGHTS):
+    # Initialize the dictionary
+    cyclist_performance = {}
+
+    # iteration in all races to compute the cyclist level
+    for _, row in races_df.iterrows():
+        
+        cyclist = row['cyclist']
+        position = row['position']
+        points = row['points']
+
+        # Initialize the nested dictionary if the cyclist is not already in the dictionary
+        if cyclist not in cyclist_performance:
+            cyclist_performance[cyclist] = {'total_races': 0}
+            # a dictionary is created for each cyclist with the keys '1_points', '2_points', '3_points', ... and 'total'
+
+        cyclist_performance[cyclist]['total_races'] += 1
+
+        # Add the date and points as a tuple to the appropriate list based on the position
+        position_key = f'{position + 1}_points'
+        if position_key in cyclist_performance[cyclist]:
+            cyclist_performance[cyclist][position_key].append(points)
+        else:
+            cyclist_performance[cyclist][position_key] = [points]
+        
         normalized_level = 0.0
 
         # Sum of placements weighted by their position and race score before the date
@@ -131,8 +163,7 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
         
         # Update the 'cyclist_level' column for the current row
         races_df.at[row.name, 'cyclist_level'] = normalized_level
-    
-    return cyclist_performance
+
 
 def get_season(date):
     month = date.month
