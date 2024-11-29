@@ -107,6 +107,8 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
         cyclist = row['cyclist']
         position = row['position']
         points = row['points']
+        num_cyclists = row['num_cyclists']
+
 
         # Initialize the nested dictionary if the cyclist is not already in the dictionary
         if cyclist not in cyclist_performance:
@@ -118,9 +120,9 @@ def compute_cyclist_performance(races_df: pd.DataFrame, WEIGHTS) -> Dict:
         # Add the date and points as a tuple to the appropriate list based on the position
         position_key = f'{position + 1}_points'
         if position_key in cyclist_performance[cyclist]:
-            cyclist_performance[cyclist][position_key].append(points)
+            cyclist_performance[cyclist][position_key].append((points, num_cyclists))
         else:
-            cyclist_performance[cyclist][position_key] = [points]
+            cyclist_performance[cyclist][position_key] = [(points, num_cyclists)]
     
     return cyclist_performance
 
@@ -135,6 +137,7 @@ def compute_cyclist_cumulative_performance(races_df: pd.DataFrame, WEIGHTS):
         cyclist = row['cyclist']
         position = row['position']
         points = row['points']
+        num_cyclists = row['num_cyclists']
 
         # Initialize the nested dictionary if the cyclist is not already in the dictionary
         if cyclist not in cyclist_performance:
@@ -146,9 +149,9 @@ def compute_cyclist_cumulative_performance(races_df: pd.DataFrame, WEIGHTS):
         # Add the date and points as a tuple to the appropriate list based on the position
         position_key = f'{position + 1}_points'
         if position_key in cyclist_performance[cyclist]:
-            cyclist_performance[cyclist][position_key].append(points)
+            cyclist_performance[cyclist][position_key].append((points, num_cyclists))
         else:
-            cyclist_performance[cyclist][position_key] = [points]
+            cyclist_performance[cyclist][position_key] = [(points, num_cyclists)]
         
         normalized_level = 0.0
 
@@ -156,7 +159,7 @@ def compute_cyclist_cumulative_performance(races_df: pd.DataFrame, WEIGHTS):
         placement_sum = 0
         for position, weight in WEIGHTS.items():
             if position in cyclist_performance[cyclist]:
-                for points in cyclist_performance[cyclist].get(position, []):
+                for points, num_cyclists in cyclist_performance[cyclist][position]:
                     placement_sum += weight * points
             
             normalized_level = placement_sum / cyclist_performance[cyclist]['total_races']
