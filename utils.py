@@ -180,3 +180,49 @@ def get_season(date):
         return 'Summer'
     else:
         return 'Autumn'
+    
+        
+def compute_average_on_column(df, column, cluster_labels):
+    # Filtra i ciclisti per cluster 0 e cluster 1
+    cluster_0 = df[df[cluster_labels] == 0]
+    cluster_1 = df[df[cluster_labels] == 1]
+
+    # Calcola la media dell'esperienza dei ciclisti per ciascun cluster
+    mean_cluster_0 = cluster_0[column].mean()
+    mean_cluster_1 = cluster_1[column].mean()
+
+    print(f"Average Value in column '{column}' in cluster 0: {mean_cluster_0}")
+    print(f"Average Value in column '{column}' in cluster 1: {mean_cluster_1}")
+
+def plot_parallel_cluster_distribution(best_df, rest_df, outlier_df, column):
+    
+    # Remove underscores from the column name for plotting
+    column_str = column.replace('_', ' ')
+    column_str = column_str.capitalize()
+    column_str = " "+column_str+" "
+    # Plot the distribution of stages won for all clusters
+    plt.figure(figsize=(18, 6))
+
+    # Plot for best cyclists
+    plt.subplot(1, 3, 1)
+    sns.histplot(best_df[column], bins=100, stat='percent')
+    plt.title('Distribution of ' + column_str + ' for Best Cyclists')
+    plt.xlabel(column_str)
+    plt.ylabel('Percentage of Cyclists')
+
+    # Plot for intermediate cyclists
+    plt.subplot(1, 3, 2)
+    sns.histplot(rest_df[column], bins=100, stat='percent')
+    plt.title('Distribution of ' + column_str + ' for Rest of Cyclists')
+    plt.xlabel(column_str)
+    plt.ylabel('Percentage of Cyclists')
+
+    # Plot for outlier cyclists
+    plt.subplot(1, 3, 3)
+    sns.histplot(outlier_df[column], bins=100, stat='percent')
+    plt.title('Distribution of ' + column_str + ' for Outliers')
+    plt.xlabel(column_str)
+    plt.ylabel('Percentage of Cyclists')
+
+    plt.tight_layout()
+    plt.show()      
