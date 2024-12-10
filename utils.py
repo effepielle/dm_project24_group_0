@@ -137,7 +137,7 @@ def compute_cyclist_cumulative_performance(races_df: pd.DataFrame, WEIGHTS):
         cyclist = row['cyclist']
         position = row['position']
         points = row['points']
-        num_cyclists = row['num_cyclists']
+        num_cyclists = row['cyclist_number']
 
         # Initialize the nested dictionary if the cyclist is not already in the dictionary
         if cyclist not in cyclist_performance:
