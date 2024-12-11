@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import bisect
+from sklearn.metrics import confusion_matrix
 
 
 # ----- DATA PREPROCESSING FUNCTIONS -----
@@ -225,4 +226,14 @@ def plot_parallel_cluster_distribution(best_df, rest_df, outlier_df, column):
     plt.ylabel('Percentage of Cyclists')
 
     plt.tight_layout()
-    plt.show()      
+    plt.show()  
+
+# Defining sensitivity and specificity as metrics of sklearn
+
+def specificity_score(y, y_pred):
+    tn, fp, fn, tp = confusion_matrix(y, y_pred).ravel()
+    return tn / (tn + fp)    
+
+def sensitivity_score(y, y_pred):
+    tn, fp, fn, tp = confusion_matrix(y, y_pred).ravel()
+    return tp / (tp + fn)
