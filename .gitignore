@@ -165,3 +165,4 @@ cython_debug/
 dataset
 .DS_Store
 TASK_1/test.ipynb
+*.pkl

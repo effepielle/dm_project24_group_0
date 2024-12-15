@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import bisect
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
 
 
 # ----- DATA PREPROCESSING FUNCTIONS -----
@@ -237,3 +237,13 @@ def specificity_score(y, y_pred):
 def sensitivity_score(y, y_pred):
     tn, fp, fn, tp = confusion_matrix(y, y_pred).ravel()
     return tp / (tp + fn)
+
+# Funzioni personalizzate con zero_division
+def precision_with_zero_division(y_true, y_pred):
+    return precision_score(y_true, y_pred, zero_division=0)
+
+def recall_with_zero_division(y_true, y_pred):
+    return recall_score(y_true, y_pred, zero_division=0)
+
+def f1_macro(y_true, y_pred):
+    return f1_score(y_true, y_pred, average='macro', zero_division=0)
