@@ -9,6 +9,8 @@ import seaborn as sns
 import numpy as np
 import bisect
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import make_scorer, get_scorer
+import os
 
 
 # ----- DATA PREPROCESSING FUNCTIONS -----
@@ -247,3 +249,40 @@ def recall_with_zero_division(y_true, y_pred):
 
 def f1_macro(y_true, y_pred):
     return f1_score(y_true, y_pred, average='macro', zero_division=0)
+
+# Scoring Dictionary
+scoring = {
+    'sensitivity': make_scorer(sensitivity_score),
+    'specificity': make_scorer(specificity_score),
+    'accuracy': get_scorer("accuracy"),
+    'precision': make_scorer(precision_with_zero_division),
+    'recall': make_scorer(recall_with_zero_division),
+    'roc_auc': get_scorer("roc_auc"),
+    'f1': get_scorer("f1"),
+}
+
+def save_results(model, resampling, mean_test_scores, std_test_scores, accuracy, recall, precision, sensitivity_score, specificity_score, f1, roc_auc, report):    
+    # Create a folder with the model name if it does not exist
+    model_folder = f"model_results/{model}"
+    if not os.path.exists(model_folder):
+        os.makedirs(model_folder)
+
+    # Save the results to a file
+    results_file = os.path.join(model_folder, f"{model}_{resampling}.txt")
+    with open(results_file, "w") as file:
+        file.write(f"MODEL: {model} ")
+        file.write(f"- Resampling: {resampling}\n\n")
+        file.write(f"Validation Results:\n\n")
+
+        for metric in scoring.keys():
+            file.write(f"{metric.capitalize()} - Mean: {mean_test_scores[metric]:.4f}, Std: {std_test_scores[metric]:.4f}\n")
+   
+        file.write(f"\nTest Results:\n\n")
+        file.write(f"Accuracy: {accuracy}\n")
+        file.write(f"Recall: {recall}\n")
+        file.write(f"Precision: {precision}\n")
+        file.write(f"Sensitivity: {sensitivity_score}\n")
+        file.write(f"Specificity: {specificity_score}\n")
+        file.write(f"F1 Score: {f1}\n")
+        file.write(f"ROC AUC: {roc_auc}\n")
+        file.write(f"\nClassification Report:\n{report}\n")
