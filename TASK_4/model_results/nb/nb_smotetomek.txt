@@ -1,0 +1,42 @@
+MODEL: nb - Resampling: smotetomek
+
+Training Results:
+
+Sensitivity - Mean: 0.4385, Std: 0.0016
+Specificity - Mean: 0.8332, Std: 0.0011
+Accuracy - Mean: 0.7807, Std: 0.0008
+Precision - Mean: 0.2870, Std: 0.0007
+Recall - Mean: 0.4385, Std: 0.0016
+Roc_auc - Mean: 0.7171, Std: 0.0004
+F1 - Mean: 0.3469, Std: 0.0004
+
+Validation Results:
+
+Sensitivity - Mean: 0.4386, Std: 0.0031
+Specificity - Mean: 0.8333, Std: 0.0010
+Accuracy - Mean: 0.7808, Std: 0.0006
+Precision - Mean: 0.2872, Std: 0.0009
+Recall - Mean: 0.4386, Std: 0.0031
+Roc_auc - Mean: 0.7170, Std: 0.0023
+F1 - Mean: 0.3471, Std: 0.0015
+
+Test Results:
+
+Accuracy: 0.701
+Recall: 0.533
+Precision: 0.253
+Sensitivity: 0.533
+Specificity: 0.73
+F1 Score: 0.343
+ROC AUC: 0.631
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.90      0.73      0.81     30219
+           1       0.25      0.53      0.34      5187
+
+    accuracy                           0.70     35406
+   macro avg       0.58      0.63      0.57     35406
+weighted avg       0.81      0.70      0.74     35406
+

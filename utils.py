@@ -261,7 +261,7 @@ scoring = {
     'f1': get_scorer("f1"),
 }
 
-def save_results(model, resampling, mean_test_scores, std_test_scores, accuracy, recall, precision, sensitivity_score, specificity_score, f1, roc_auc, report):    
+def save_results(model, resampling, mean_train_scores, std_train_scores, mean_test_scores, std_test_scores, accuracy, recall, precision, sensitivity_score, specificity_score, f1, roc_auc, report):    
     # Create a folder with the model name if it does not exist
     model_folder = f"model_results/{model}"
     if not os.path.exists(model_folder):
@@ -272,7 +272,13 @@ def save_results(model, resampling, mean_test_scores, std_test_scores, accuracy,
     with open(results_file, "w") as file:
         file.write(f"MODEL: {model} ")
         file.write(f"- Resampling: {resampling}\n\n")
-        file.write(f"Validation Results:\n\n")
+        
+        file.write(f"Training Results:\n\n")
+
+        for metric in scoring.keys():
+            file.write(f"{metric.capitalize()} - Mean: {mean_train_scores[metric]:.4f}, Std: {std_train_scores[metric]:.4f}\n")
+        
+        file.write(f"\n\nValidation Results:\n\n")
 
         for metric in scoring.keys():
             file.write(f"{metric.capitalize()} - Mean: {mean_test_scores[metric]:.4f}, Std: {std_test_scores[metric]:.4f}\n")
