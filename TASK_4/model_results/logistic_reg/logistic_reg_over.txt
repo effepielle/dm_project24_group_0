@@ -1,14 +1,25 @@
 MODEL: logistic_reg - Resampling: over
 
+Training Results:
+
+Sensitivity - Mean: 0.4450, Std: 0.0017
+Specificity - Mean: 0.8559, Std: 0.0004
+Accuracy - Mean: 0.8013, Std: 0.0004
+Precision - Mean: 0.3211, Std: 0.0009
+Recall - Mean: 0.4450, Std: 0.0017
+Roc_auc - Mean: 0.7460, Std: 0.0002
+F1 - Mean: 0.3730, Std: 0.0011
+
+
 Validation Results:
 
-Sensitivity - Mean: 0.4449, Std: 0.0060
-Specificity - Mean: 0.8560, Std: 0.0011
-Accuracy - Mean: 0.8014, Std: 0.0011
-Precision - Mean: 0.3213, Std: 0.0031
-Recall - Mean: 0.4449, Std: 0.0060
+Sensitivity - Mean: 0.4451, Std: 0.0059
+Specificity - Mean: 0.8558, Std: 0.0012
+Accuracy - Mean: 0.8013, Std: 0.0012
+Precision - Mean: 0.3211, Std: 0.0031
+Recall - Mean: 0.4451, Std: 0.0059
 Roc_auc - Mean: 0.7459, Std: 0.0010
-F1 - Mean: 0.3731, Std: 0.0040
+F1 - Mean: 0.3730, Std: 0.0040
 
 Test Results:
 
@@ -16,7 +27,7 @@ Accuracy: 0.767
 Recall: 0.476
 Precision: 0.308
 Sensitivity: 0.476
-Specificity: 0.817
+Specificity: 0.816
 F1 Score: 0.374
 ROC AUC: 0.646
 
