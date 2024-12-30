@@ -1,0 +1,43 @@
+MODEL: gbm - Resampling: under
+
+Training Results:
+
+Sensitivity - Mean: 0.7180, Std: 0.0019
+Specificity - Mean: 0.7141, Std: 0.0018
+Accuracy - Mean: 0.7147, Std: 0.0014
+Precision - Mean: 0.2778, Std: 0.0009
+Recall - Mean: 0.7180, Std: 0.0019
+Roc_auc - Mean: 0.7898, Std: 0.0005
+F1 - Mean: 0.4007, Std: 0.0008
+
+
+Validation Results:
+
+Sensitivity - Mean: 0.7001, Std: 0.0019
+Specificity - Mean: 0.7114, Std: 0.0030
+Accuracy - Mean: 0.7099, Std: 0.0024
+Precision - Mean: 0.2709, Std: 0.0017
+Recall - Mean: 0.7001, Std: 0.0019
+Roc_auc - Mean: 0.7748, Std: 0.0009
+F1 - Mean: 0.3906, Std: 0.0017
+
+Test Results:
+
+Accuracy: 0.673
+Recall: 0.747
+Precision: 0.274
+Sensitivity: 0.747
+Specificity: 0.66
+F1 Score: 0.401
+ROC AUC: 0.703
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.94      0.66      0.77     30219
+           1       0.27      0.75      0.40      5187
+
+    accuracy                           0.67     35406
+   macro avg       0.61      0.70      0.59     35406
+weighted avg       0.84      0.67      0.72     35406
+
