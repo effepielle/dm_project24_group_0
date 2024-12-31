@@ -1,0 +1,43 @@
+MODEL: rule_based - Resampling: under
+
+Training Results:
+
+Sensitivity - Mean: 0.5743, Std: 0.0044
+Specificity - Mean: 0.7743, Std: 0.0031
+Accuracy - Mean: 0.7477, Std: 0.0033
+Precision - Mean: 0.2804, Std: 0.0042
+Recall - Mean: 0.5743, Std: 0.0044
+Roc_auc - Mean: 0.6869, Std: 0.0038
+F1 - Mean: 0.3768, Std: 0.0048
+
+
+Validation Results:
+
+Sensitivity - Mean: 0.5747, Std: 0.0334
+Specificity - Mean: 0.7734, Std: 0.0322
+Accuracy - Mean: 0.7470, Std: 0.0254
+Precision - Mean: 0.2819, Std: 0.0224
+Recall - Mean: 0.5747, Std: 0.0334
+Roc_auc - Mean: 0.6868, Std: 0.0144
+F1 - Mean: 0.3773, Std: 0.0201
+
+Test Results:
+
+Accuracy: 0.63
+Recall: 0.749
+Precision: 0.248
+Sensitivity: 0.749
+Specificity: 0.609
+F1 Score: 0.372
+ROC AUC: 0.679
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.93      0.61      0.74     30219
+           1       0.25      0.75      0.37      5187
+
+    accuracy                           0.63     35406
+   macro avg       0.59      0.68      0.55     35406
+weighted avg       0.83      0.63      0.68     35406
+
