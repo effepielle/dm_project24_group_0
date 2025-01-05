@@ -1,0 +1,55 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{hyperref} 
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{subcaption}
+
+
+
+\usepackage{graphicx} % Required for inserting images
+\usepackage[left=1.4cm, right=1.4cm, top=1.9cm, bottom=1.9cm]{geometry}
+
+
+
+\title{\Huge \textbf{Data Mining \\ Project Report}} 
+
+\author{ \Large{Aliprandi Francesco} \\ \Large{Liuzzi Francesco Paolo} \\ \Large{Simonetti Francesco}}
+\date{\large{A.Y. 2024/2025}}
+
+
+\begin{document}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/unipi.png} 
+\end{figure}
+
+\maketitle
+
+\newpage
+
+\section*{Introduction}
+This report describes all the procedures and methodologies adopted to perform data analysis and mining on a dataset consisting of detailed information about professional cycling races. The analysis focuses on exploring various techniques, including understanding the data, data transformation, clustering, prediction, and AI explanation, to gain insights into cyclist performance over the years.\\
+
+\noindent The report is organized as follows: Section 1 focuses on data understanding, including all the analyses necessary to comprehend the dataset. Section 2 details the data cleaning process, outlining all the interventions to refine the dataset. Section 3 addresses the feature engineering for clustering, providing explanations of the features created to tackle the clustering task. 
+Section 4 discusses outlier detection performed before clustering and includes a thorough analysis of the clustering algorithms used. Section 5 presents the classification task, covering feature engineering, imbalance analysis, an exploration of the task's inherent complexities, and a comparison of all models tried. Finally, Section 6 delves into explainable AI, analyzing the decisions made by the best-performing classification model.
+
+\noindent The project notebooks with a comprehensive and more detailed analysis can be reached at: \url{https://github.com/effepielle/dm_project24_group_0}
+
+\input{1_du}
+
+\input{2_dc}
+
+\input{3_de}
+
+\input{4_clustering} 
+
+\input{5_prediction}
+
+\input{6_xai}
+
+\end{document}
