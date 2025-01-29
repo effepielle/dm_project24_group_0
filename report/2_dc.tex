@@ -1,0 +1,48 @@
+\section{Data Cleaning}
+\label{sec: data_cleaning}
+
+\subsection{Cyclist dataset}
+
+\textbf{Birth Date}:
+The missing birth dates of the cyclists were assigned as follows: the average debut age was calculated, and using the cyclist's first race as a reference, this average age was subtracted from the date of the race to approximate birth date. This approach was used because there were not many null values for this feature.\\
+
+\noindent
+\textbf{Nationality}:
+Regarding nationality, it was imputed by manually checking online, as there was only one missing value. \\
+
+\noindent
+\textbf{Height and Weight}:
+Height and weight data are missing for approximately half of the entries. Given the correlation between these features, the initial plan was to estimate one value from the other when only one was missing, and then handle any remaining missing values either through approximation or by discarding rows if their number was minimal. However, as shown in \autoref{fig:null_values}, height and weight are often missing simultaneously, making it infeasible to reliably impute these values for a significant portion of the dataset.
+
+\subsection{Races dataset}
+All rows that represent duplicate cyclists for the same stage URL were removed. We dropped both duplicates since we didn’t know which one was the correct one.\\
+
+\noindent
+\textbf{points}:
+Only four over more than five thousand stages do not have point information. So we decided to impute missing values using a segmentation approach: we imputed the median value of that particular stage over the years. \\
+
+\noindent
+\textbf{uci\_points}:
+As they have a lot of missing values and we have points information, we decided to drop this column.\\
+
+\noindent
+\textbf{length and climb\_total normalization:} both features are normalized to avoid excessively large values. Length is now represented in hundreds of kilometers, while climb total is measured in kilometers.\\
+
+\noindent
+\textbf{climb\_total and profile cleaning:}
+Given that the two features contain a significant number of null values but they are critical for evaluating stage complexity, we initially considered dropping rows with null values. However, since this cleaning step would result in the removal of more than $140'000$ rows and more than $2'000$ stages, we decided to postpone this step to preserve stage information that could be valuable for feature engineering of the cyclist's dataset. \\
+
+\noindent
+\textbf{average\_temperature:}
+Since we have very few known values, we decided to drop the column.\\
+
+\noindent
+\textbf{is\_cobbled and is\_gravel:}
+Since all the values are set to "False" so they are not informative, we decided to drop the columns.\\
+
+\noindent
+\textbf{delta:}
+Since the delta column contains many incorrect values (as explained in data understanding), the column is not useful for our analysis, so we decided to drop it.\\
+
+\noindent
+\textbf{Note:} Due to the reasons outlined for the features \textit{climb\_total} and \textit{profile}, some rows will still contain null values after this initial phase of data cleaning.
